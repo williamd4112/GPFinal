@@ -34,7 +34,12 @@ namespace UnityStandardAssets._2D
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
             m_Character.Move(h, crouch, m_Jump);
-            m_Jump = false;
+            m_Jump = false; 
+
+			//control flashlight
+			m_Character.RotateFlashlight ();
         }
+
+
     }
 }

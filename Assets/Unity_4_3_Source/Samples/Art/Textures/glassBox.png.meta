@@ -1,7 +1,9 @@
 fileFormatVersion: 2
 guid: e71821f4cf71a9840a96fd990d7cc68f
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: glassBox_0
+    21300002: glassBox_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

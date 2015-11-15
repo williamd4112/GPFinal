@@ -20,6 +20,11 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+		private GameObject flashlight;
+		Vector3 curRot;
+		public float MaxTiltAngle;
+		float maxZ, minZ;
+
         private void Awake()
         {
             // Setting up references.
@@ -27,6 +32,13 @@ namespace UnityStandardAssets._2D
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+			flashlight = GameObject.Find("/CharacterRobotBoy/flashlight");
+
+			MaxTiltAngle = 60.0f;
+			maxZ = curRot.z + MaxTiltAngle;
+			minZ = curRot.z - MaxTiltAngle;
+
         }
 
 
@@ -110,5 +122,25 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+
+		//rotate the flashlight
+		public void RotateFlashlight(){
+
+			//rotate upward
+			if (Input.GetKey (KeyCode.R)) {
+				curRot.z += 1;
+				curRot.z = Mathf.Clamp(curRot.z, minZ, maxZ);
+				Debug.Log (curRot.z);
+				flashlight.transform.eulerAngles = curRot;
+			} 
+
+			//rotate downward
+			if (Input.GetKey (KeyCode.F)) {
+				curRot.z -= 1;
+				curRot.z = Mathf.Clamp(curRot.z, minZ, maxZ);
+				Debug.Log (curRot.z);
+				flashlight.transform.eulerAngles = curRot;
+			} 
+		}
     }
 }
