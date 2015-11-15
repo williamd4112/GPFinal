@@ -59,6 +59,7 @@
      <Compile Include="Assets\2DVLS\Samples\Scripts\SinMove_VLS.cs" />
      <Compile Include="Assets\2DVLS\Samples\Scripts\SinRotate_VLS.cs" />
      <Compile Include="Assets\2DVLS\Samples\Scripts\StressTest_VLS.cs" />
+     <Compile Include="Assets\Dreammancer\Script\DreamCharacter.cs" />
      <Compile Include="Assets\Dreammancer\Script\DreamObject.cs" />
      <Compile Include="Assets\Dreammancer\Script\Light2DUtil.cs" />
      <Compile Include="Assets\Dreammancer\Script\ObjectLightEventListener.cs" />
