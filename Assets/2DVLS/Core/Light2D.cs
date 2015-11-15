@@ -141,7 +141,7 @@ public class Light2D : MonoBehaviour
     /// <summary>Sets the size of the directional light in the Y axis. Value clamped between 0.001f and Mathf.Infinity</summary>
     public float LightBeamRange { get { return beamRange; } set { beamRange = Mathf.Clamp(value, 0.001f, Mathf.Infinity); directionalLightSphereSize = Vector3.Distance(Vector3.zero, new Vector3(beamSize, beamRange, 0)); flagMeshUpdate = true; } }
     /// <summary>Sets the light cone starting point. Value 0 = Aims Right, Value 90 = Aims Up.</summary>
-    public float LightConeStart { get { return coneStart; } set { coneStart = value; flagCircleUpdate = true; flagMeshUpdate = true; } }
+    public float LightConeStart { get { return coneStart; } set { coneStart = (value < 0) ? value % 360 + 360 : value % 360; flagCircleUpdate = true; flagMeshUpdate = true; } }
     /// <summary>Sets the light cone size (wedge shape). Value is clamped between 0 and 360.</summary>
     public float LightConeAngle { get { return coneAngle; } set { coneAngle = Mathf.Clamp(value, 0f, 360f); flagCircleUpdate = true; flagMeshUpdate = true; } }
     /// <summary>Sets the Color of the light.</summary>

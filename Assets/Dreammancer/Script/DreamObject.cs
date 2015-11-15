@@ -11,6 +11,7 @@ public class DreamObject : MonoBehaviour {
     Color c = Color.black;
     Renderer mRenderer;
     Material mMaterial;
+    Light2D mReflectLight;
 
     void Start()
     {
@@ -38,19 +39,20 @@ public class DreamObject : MonoBehaviour {
     {
         if (isDetected) {
             mMaterial.color = Color.Lerp(mMaterial.color, c, Time.deltaTime * 10f);
-            Debug.Log(c);
         }
         else
             mMaterial.color = Color.Lerp(mMaterial.color, mOriginColor, Time.deltaTime * 5f);
-
-        isDetected = false;
     }
 
     void OnLightEnter(Light2D l, GameObject g)
     {
-        if (g.GetInstanceID() == id)
+        if (g.GetInstanceID() == id && !isDetected)
         {
-            Debug.Log("Enter");
+            Debug.Log("Enter angle: ");
+            Debug.Log(l.LightConeStart);
+            mReflectLight = Light2D.Create(transform.position, Color.cyan, 5.0f, 30);
+            Debug.Log(mReflectLight.transform.position);
+            mReflectLight.LightConeStart = 180.0f - l.LightConeStart;
             c = mOriginColor + l.LightColor;
         }
     }
@@ -60,6 +62,7 @@ public class DreamObject : MonoBehaviour {
         if (g.GetInstanceID() == id)
         {
             Debug.Log("Stay");
+            mReflectLight.transform.position = transform.position - GetComponent<Collider2D>().bounds.extents;
             isDetected = true;
         }
     }
@@ -69,7 +72,8 @@ public class DreamObject : MonoBehaviour {
         if (g.GetInstanceID() == id)
         {
             Debug.Log("Exit");
-
+            DestroyObject(mReflectLight);
+            isDetected = false;
         }
     }
 }

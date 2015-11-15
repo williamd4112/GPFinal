@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class CreateLight_VLS : MonoBehaviour 
 {
     public Vector3 spawnPoint = new Vector3(0, 3, 0);
-    public float initialRadius = 25f;
+    public static float initialRadius = 3.0f;
     public float maxRadius = 25;
     public float minRadius = 1;
-    public bool isPro = false;
+    public static bool isPro = false;
 
-    private List<Light2D> lightsInScene = new List<Light2D>();
-    private Light2D selectedLight;
+    public static List<Light2D> lightsInScene = new List<Light2D>();
+    public static Light2D selectedLight;
     private int points = 5;
     private Vector2[] circleLookup;
 
@@ -93,7 +93,7 @@ public class CreateLight_VLS : MonoBehaviour
         GL.PopMatrix();
     }
 
-    void CreateLight(Vector3 position)
+    public static void CreateLight(Vector3 position)
     {
         selectedLight = Light2D.Create(position, new Color(1f, 0.5f, 0f, 0f), initialRadius);
         selectedLight.EnableEvents = true;
