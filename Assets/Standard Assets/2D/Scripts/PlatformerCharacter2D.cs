@@ -124,23 +124,35 @@ namespace UnityStandardAssets._2D
         }
 
 		//rotate the flashlight
-		public void RotateFlashlight(){
-
+		public void ControlFlashlight(){
 			//rotate upward
 			if (Input.GetKey (KeyCode.R)) {
-				curRot.z += 1;
-				curRot.z = Mathf.Clamp(curRot.z, minZ, maxZ);
-				Debug.Log (curRot.z);
-				flashlight.transform.eulerAngles = curRot;
-			} 
-
+				Rotate ("upward");
+			}
 			//rotate downward
+			if (Input.GetKey (KeyCode.T)) {
+				Rotate ("downward");
+			}
+			//focus energy
 			if (Input.GetKey (KeyCode.F)) {
-				curRot.z -= 1;
-				curRot.z = Mathf.Clamp(curRot.z, minZ, maxZ);
-				Debug.Log (curRot.z);
-				flashlight.transform.eulerAngles = curRot;
-			} 
+				Focus();
+			}
+		}
+
+		private void Rotate(string direction){
+
+			if (direction == "upward")
+				curRot.z = curRot.z + 1;
+			else if(direction == "downward")
+				curRot.z = curRot.z - 1;
+
+			curRot.z = Mathf.Clamp(curRot.z, minZ, maxZ);
+			flashlight.transform.eulerAngles = curRot;
+			
+		}
+
+		private void Focus(){
+			Debug.Log("Focus");
 		}
     }
 }

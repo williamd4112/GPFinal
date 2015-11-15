@@ -26,7 +26,7 @@ namespace UnityStandardAssets._2D
             }
         }
 
-
+		   
         private void FixedUpdate()
         {
             // Read the inputs.
@@ -37,7 +37,8 @@ namespace UnityStandardAssets._2D
             m_Jump = false; 
 
 			//control flashlight
-			m_Character.RotateFlashlight ();
+			m_Character.ControlFlashlight ();
+
         }
 
 
