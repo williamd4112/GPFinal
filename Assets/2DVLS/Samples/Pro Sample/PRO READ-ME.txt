@@ -1,0 +1,18 @@
+
+Make layer called "Light2D" (Does not have to be the same just remember which layer you created)
+
+Duplicate your Main-Camera, rename it LightCam, and delete the 'GUILayer', 'Flare Layer', and 'Audio Listener' components from it.
+
+Add the 'Blur' shader to the LightCam
+
+Set the LightCam settings
+- Clear Flags = Solid Color (or Skybox)
+- Culling Mask = "Light2D" only
+- Depth = -1
+
+Set the Main Camera settings
+- Clear Flags = Depth Only
+- Culling Mask = (Everything checked except for the 'Light2D' layer
+- Depth = 0 (or any value higher than the LightCam depth)
+
+After that you can add your lights and set their layer to "Light2D"
