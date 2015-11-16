@@ -61,7 +61,9 @@
      <Compile Include="Assets\2DVLS\Samples\Scripts\StressTest_VLS.cs" />
      <Compile Include="Assets\Dreammancer\Script\DreamCharacter.cs" />
      <Compile Include="Assets\Dreammancer\Script\DreamObject.cs" />
+     <Compile Include="Assets\Dreammancer\Script\FlowLight.cs" />
      <Compile Include="Assets\Dreammancer\Script\Light2DUtil.cs" />
+     <Compile Include="Assets\Dreammancer\Script\LightSpawnPoint.cs" />
      <Compile Include="Assets\Dreammancer\Script\ObjectLightEventListener.cs" />
      <Compile Include="Assets\Unity_4_3_Source\Samples\Scripts\SpriteEvent_VLS.cs" />
      <None Include="Assets\Unity_4_3_Source\Shaders (WIP)\2DVLS_Cutout (2-Sided).shader" />

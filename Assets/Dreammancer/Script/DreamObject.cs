@@ -12,6 +12,9 @@ public class DreamObject : MonoBehaviour {
     [SerializeField]
     protected float mRecoverTime = 3.0f;
 
+    [SerializeField]
+    protected float mEnableEffectRate = 2.0f;
+
     protected int id = 0;
     protected bool isDetected = false;
     protected bool isEffect = false;
@@ -50,8 +53,9 @@ public class DreamObject : MonoBehaviour {
     {
         if(mCollider.enabled && mRenderer.enabled)
         {
-            float rate = 10.0f;
+            float rate = mEnableEffectRate;
             mMaterial.color = Color.Lerp(mMaterial.color, c, Time.deltaTime * rate);
+
             Debug.Log(mMaterial.color + "; " + c);
         }
     }
@@ -68,21 +72,21 @@ public class DreamObject : MonoBehaviour {
     {
         if (g.GetInstanceID() == id)
         {
-            Debug.Log("Stay");
             isDetected = true;
         
-            if(isAffect(l.LightColor) && !isEffect)
+            if(isAffect(c) && !isEffect)
             {
                 isEffect = true;
 
                 Color curColor = mMaterial.color;
                 c = new Color(curColor.r, curColor.g, curColor.b, 0.0f);
-                Debug.Log("Effect");
             }
             else if(!isEffect && c.a < mThreshold)
             {
-                Debug.Log("Lighting");
                 c += l.LightColor;
+                if (c.r > mThreshold) c.r = mThreshold;
+                if (c.g > mThreshold) c.g = mThreshold;
+                if (c.b > mThreshold) c.b = mThreshold;
             }
 
             if (mMaterial.color.a <= 0.0f + EPILSON)
@@ -99,7 +103,6 @@ public class DreamObject : MonoBehaviour {
     {
         if (g.GetInstanceID() == id)
         {
-            Debug.Log("Exit");
             if (isEffect)
             {
                 StartCoroutine(fadeBackToOrigin(mRecoverTime));
@@ -108,17 +111,18 @@ public class DreamObject : MonoBehaviour {
             isDetected = false;
             isEffect = false;
             c = mOriginColor;
+            mMaterial.color = mOriginColor;
         }
     }
 
     bool isAffect(Color lightColor)
     {
         Vector3 lightColorV = new Vector3(lightColor.r, lightColor.g, lightColor.b);
-        Vector3 materialColorV = new Vector3(mMaterial.color.r, mMaterial.color.g, mMaterial.color.b);
+        Vector3 originColorV = new Vector3(mOriginColor.r, mOriginColor.g, mOriginColor.b);
         lightColorV.Normalize();
-        materialColorV.Normalize();
+        originColorV.Normalize();
 
-        return (lightColorV == materialColorV && mMaterial.color.a >= mThreshold - EPILSON);
+        return (lightColorV == originColorV && mMaterial.color.a >= mThreshold - EPILSON);
     }
 
     IEnumerator fadeBackToOrigin(float sec)

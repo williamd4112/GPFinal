@@ -1292,6 +1292,23 @@ public class Light2D : MonoBehaviour
     /// <summary>
     /// Easy static function for creating 2D lights.
     /// </summary>
+    /// <param name="obj">atta</param>
+    /// <param name="_position">Sets the position of the created light</param>
+    /// <param name="_lightColor">Sets the color of the created light</param>
+    /// <param name="_lightRadius">Sets the radius of the created light</param>
+    /// <param name="_lightConeAngle">Sets the cone angle of the light</param>
+    /// <param name="_lightDetail">Sets the detail of the light</param>
+    /// <param name="_useEvents">If 'TRUE' event messages will be sent.</param>
+    /// <param name="_lightType">Sets what type of light will be rendered. [Directional, Radial, Shadow]</param>
+    /// <returns>Returns the created Light2D object, NOT the gameobject.</returns>
+    public static Light2D Create(GameObject obj, Vector3 _position, Color _lightColor, float _lightRadius = 1, int _lightConeAngle = 360, LightDetailSetting _lightDetail = LightDetailSetting.Rays_500, bool _useEvents = false, LightTypeSetting _lightType = LightTypeSetting.Radial)
+    {
+        return CreateFor(obj, _position, (Material)Resources.Load("RadialLight"), _lightColor, _lightRadius, _lightConeAngle, _lightDetail, _useEvents, _lightType);
+    }
+
+    /// <summary>
+    /// Easy static function for creating 2D lights.
+    /// </summary>
     /// <param name="_position">Sets the position of the created light</param>
     /// <param name="_lightMaterial">Sets the Material of the light</param>
     /// <param name="_lightColor">Sets the color of the created light</param>
@@ -1322,6 +1339,46 @@ public class Light2D : MonoBehaviour
             l2D.LightBeamRange = _lightConeAngle;
         }
         
+        l2D.ShadowLayer = -1;
+        l2D.EnableEvents = _useEvents;
+        l2D.LightType = _lightType;
+
+        return l2D;
+    }
+
+    /// <summary>
+    /// Easy static function for creating 2D lights.
+    /// </summary>
+    /// <param name="obj">attached object</param>
+    /// <param name="_position">Sets the position of the created light</param>
+    /// <param name="_lightMaterial">Sets the Material of the light</param>
+    /// <param name="_lightColor">Sets the color of the created light</param>
+    /// <param name="_lightRadius">Sets the radius of the created light. [If Directional this is equal to LightBeamSize]</param>
+    /// <param name="_lightConeAngle">Sets the cone angle of the light. [If Directional this is equal to LightBeamRange]</param>
+    /// <param name="_lightDetail">Sets the detail of the light</param>
+    /// <param name="_useEvents">If 'TRUE' event messages will be sent.</param>
+    /// <param name="_lightType">Sets what type of light will be rendered. [Directional, Radial, Shadow]</param>
+    /// <returns>Returns the created Light2D object, NOT the gameobject.</returns>
+    public static Light2D CreateFor(GameObject obj, Vector3 _position, Material _lightMaterial, Color _lightColor, float _lightRadius = 1, int _lightConeAngle = 360, LightDetailSetting _lightDetail = LightDetailSetting.Rays_500, bool _useEvents = false, LightTypeSetting _lightType = LightTypeSetting.Radial)
+    {
+        obj.transform.position = _position;
+
+        Light2D l2D = obj.AddComponent<Light2D>();
+        l2D.LightMaterial = _lightMaterial;
+        l2D.LightColor = _lightColor;
+        l2D.LightDetail = _lightDetail;
+
+        if (_lightType != Light2D.LightTypeSetting.Directional)
+        {
+            l2D.LightRadius = _lightRadius;
+            l2D.LightConeAngle = _lightConeAngle;
+        }
+        else
+        {
+            l2D.LightBeamSize = _lightRadius;
+            l2D.LightBeamRange = _lightConeAngle;
+        }
+
         l2D.ShadowLayer = -1;
         l2D.EnableEvents = _useEvents;
         l2D.LightType = _lightType;
